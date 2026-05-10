@@ -14,6 +14,8 @@
 ![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Active%20Development-orange?style=for-the-badge)
 
+*"From idea to repository — in seconds."*
+
 </div>
 
 ---
@@ -24,7 +26,7 @@ Every developer knows the pain: you have a great idea, but before writing a sing
 
 **RepoForge eliminates that friction.**
 
-It's a modern desktop application built with Python and CustomTkinter that generates complete, professional project structures for the most common tech stacks — with a single click, no terminal required.
+It's a modern desktop application built with Python and CustomTkinter that generates complete, professional project structures for the most common tech stacks — with a single click, no terminal required. Choose your destination folder, pick a template, and your project is ready to go.
 
 ---
 
@@ -37,6 +39,7 @@ It's a modern desktop application built with Python and CustomTkinter that gener
 | Repeat the same setup every project | Consistent structure every time |
 | Risk typos in folder names | Predefined, battle-tested templates |
 | Open terminal, remember commands | Clean GUI — just point and click |
+| Empty README with no content | Auto-generated README with your project info |
 
 > RepoForge doesn't replace Git or your IDE. It gives you the perfect starting point so you can focus on what actually matters: **building.**
 
@@ -47,6 +50,8 @@ It's a modern desktop application built with Python and CustomTkinter that gener
 - 🖥️ **Modern dark UI** built with CustomTkinter
 - 📁 **Automatic folder and file generation** using Python's `pathlib`
 - 🧩 **4 ready-to-use templates** for popular tech stacks
+- 📝 **Auto-generated README** with your project name and description
+- 📂 **Custom output directory** — choose exactly where to create your project
 - 🔍 **Duplicate project detection** — prevents overwriting existing folders
 - ⚡ **Instant boilerplate** — from zero to structured project in under 5 seconds
 - 🧼 **No terminal needed** — fully GUI-driven experience
@@ -135,6 +140,9 @@ project/
 │  │ insert the description    │  │
 │  └───────────────────────────┘  │
 │                                 │
+│  [ 📂 Choose folder ]           │
+│  ~/Documents/projects           │
+│                                 │
 │  Select your technology         │
 │  ┌──────────────────────────┐   │
 │  │       Python CLI         │   │
@@ -169,10 +177,12 @@ project/
 RepoForge keeps it simple under the hood:
 
 1. **Template definitions** — each tech stack is mapped to a list of files and folders inside a Python dictionary
-2. **Path resolution** — `pathlib.Path` builds the full path for each item relative to the project name the user provides
-3. **Smart creation** — items ending with `/` are created as directories; everything else is created as an empty file with `.touch()`
-4. **Duplicate check** — before creating anything, RepoForge verifies whether a folder with that name already exists in the current directory
-5. **User feedback** — a label updates in real time to confirm success or warn about errors
+2. **Folder selection** — the user picks the destination directory via a native OS folder picker
+3. **Path resolution** — `pathlib.Path` builds the full path for each item relative to the chosen folder and project name
+4. **Smart creation** — items ending with `/` are created as directories; everything else is created as a file
+5. **Auto README** — the `README.md` is generated with the project name and description the user provided, instead of being left empty
+6. **Duplicate check** — before creating anything, RepoForge verifies whether a folder with that name already exists in the chosen directory
+7. **User feedback** — a label updates in real time to confirm success or warn about errors
 
 No magic. Just clean, readable Python.
 
@@ -184,7 +194,8 @@ No magic. Just clean, readable Python.
 
 ```bash
 # 1. Clone the repository
-git clone git clone <repository-url>
+git clone <repository-url>
+cd repoforge
 
 # 2. Install dependencies
 pip install customtkinter
@@ -201,20 +212,21 @@ python main.py
 
 1. Open the app with `python main.py`
 2. Click **New Project [+]**
-3. Enter your **project name** (this will be the folder name)
-4. Enter an optional **description**
-5. Select your **technology template**
-6. Click the **Create repo** button
-7. Your project structure is ready inside the current directory ✅
+3. Enter your **project name** — this will be the folder name
+4. Enter an optional **description** — used to auto-generate the README
+5. Click **Choose folder** and select where to create the project
+6. Select your **technology template**
+7. Click the **Create repo** button
+8. Your project structure is ready in the folder you chose ✅
 
 ---
 
 ## 🔍 Example
 
-Given project name `my-fastapi-app` with the **FastAPI** template selected, RepoForge will generate:
+Given project name `my-fastapi-app`, description `A REST API built with FastAPI`, destination `~/Documents/projects`, and the **FastAPI** template selected, RepoForge will generate:
 
 ```
-my-fastapi-app/
+~/Documents/projects/my-fastapi-app/
 ├── app/
 │   ├── __init__.py
 │   ├── routes/
@@ -227,7 +239,7 @@ my-fastapi-app/
 ├── .env
 ├── .gitignore
 ├── requirements.txt
-└── README.md
+└── README.md       ← contains "# my-fastapi-app" and your description
 ```
 
 Ready to `cd` into and start coding immediately.
@@ -238,12 +250,12 @@ Ready to `cd` into and start coding immediately.
 
 ```
 repoforge/
-├── main.py          # Entry point — UI and logic
+├── main.py          # Entry point — UI and all logic
 ├── requirements.txt # Project dependencies
 └── README.md        # This file
 ```
 
-> The project is intentionally kept simple and single-file for now. Refactoring into modules (`core/`, `ui/`) is planned for future versions.
+> The project is intentionally kept simple and single-file for now. Refactoring into modules (`core/`, `ui/`) is planned for a future version.
 
 ---
 
@@ -252,24 +264,28 @@ repoforge/
 ### Version 1.0 — Current
 - [x] Dark mode UI with CustomTkinter
 - [x] 4 project templates
-- [x] Automatic folder/file generation
+- [x] Automatic folder and file generation
+- [x] Custom output directory selector
+- [x] Auto-generated README with project name and description
 - [x] Duplicate project detection
 - [x] User feedback labels
 
 ### Version 1.1 — Planned
 - [ ] GitHub API integration — create remote repo automatically
-- [ ] Custom output directory selector
+- [ ] Optional GitHub push via checkbox
 - [ ] Token-based authentication with secure local storage
+- [ ] Token validation before saving
 
 ### Version 1.2 — Future
-- [ ] Auto Git initialization and first commit (via subprocess)
-- [ ] Custom template creator
+- [ ] AI-powered README generation based on project name, description and template
+- [ ] Custom template creator — define your own folder structures
+- [ ] Templates stored as external JSON files — community-extensible
 - [ ] Settings screen with persistent configuration
-- [ ] README auto-generation based on project name and description
 
 ### Version 2.0 — Long-term vision
-- [ ] Git operations without Git installed (pure Python)
+- [ ] Git operations without Git installed (pure Python via Dulwich)
 - [ ] One-click: local structure + GitHub repo + first push
+- [ ] Multi-platform hosting support (GitHub, Codeberg, GitLab)
 - [ ] Executable distribution via PyInstaller
 
 ---
@@ -313,4 +329,3 @@ Made with ☕ and Python
 ⭐ If RepoForge saved you time, consider starring the repo!
 
 </div>
-
