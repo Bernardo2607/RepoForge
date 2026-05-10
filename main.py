@@ -1,6 +1,8 @@
 import customtkinter as ctk
 from pathlib import Path
 from tkinter import filedialog
+import requests
+import json
 
 selected_template = None
 selected_folder = None
@@ -116,7 +118,7 @@ def choose_folder():
 def start():
     
     new_project.pack_forget()
-   
+    github_checkbox.pack_forget()
     global name_project, desc_project
 
     name_title = ctk.CTkLabel(RepoForge, text='Project name')
@@ -162,5 +164,9 @@ def start():
 
 new_project = ctk.CTkButton(RepoForge, text='New Project[+]', command=start)
 new_project.pack(pady=10)
+
+checkbox_var = ctk.IntVar()
+github_checkbox = ctk.CTkCheckBox(RepoForge, text='Also create on GitHub', variable=checkbox_var)
+github_checkbox.pack()
 
 RepoForge.mainloop()
