@@ -184,8 +184,7 @@ No magic. Just clean, readable Python.
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/Bernardo2607/repoforge.git
-cd repoforge
+git clone git clone <repository-url>
 
 # 2. Install dependencies
 pip install customtkinter
